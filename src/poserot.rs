@@ -1,4 +1,6 @@
-use std::{marker::PhantomData, ops::Add};
+//! Utilities for expressing pairs of Vectors and Quaternions.
+
+use std::ops::Add;
 
 use core::fmt::Debug;
 use num_traits::{One, Zero};
@@ -12,9 +14,9 @@ where
     T: Clone + PartialEq,
 {
     /// Pose in space
-    pose: Vec3<T>,
+    pub pose: Vec3<T>,
     /// Rotation
-    rotation: Quaternion<T>,
+    pub rotation: Quaternion<T>,
 }
 
 impl<T: Clone + PartialEq> PoseRot<T> {
@@ -41,7 +43,6 @@ impl<T: Zero + One + Clone + PartialEq> Add for PoseRot<T> {
         }
     }
 }
-
 
 impl<T: Zero + One + Clone + PartialEq> Zero for PoseRot<T> {
     fn zero() -> Self {

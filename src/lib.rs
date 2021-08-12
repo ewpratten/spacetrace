@@ -8,7 +8,8 @@ extern crate core as std;
 #[macro_use]
 pub extern crate serde;
 
-mod trace;
+pub mod trace;
 pub use crate::trace::SpaceTrace;
-mod poserot;
+pub mod poserot;
 pub use crate::poserot::PoseRot;
+pub(crate) mod bezier_util;
