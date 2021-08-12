@@ -23,3 +23,4 @@ spacetrace = { version = "0.1", path = "../spacetrace" }
 plotters = "^0.3.1"
 clap = "2.33"
 autojson = "0.1"
+indicatif = "0.16"

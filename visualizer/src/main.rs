@@ -1,6 +1,7 @@
 use std::ops::Range;
 
 use clap::{crate_authors, crate_description, crate_name, crate_version, App, Arg};
+use indicatif::ProgressBar;
 use plotters::drawing::IntoDrawingArea;
 use plotters::prelude::{BitMapBackend, ChartBuilder, LineSeries, SVGBackend};
 use plotters::style::{BLACK, GREEN, RED, WHITE};
@@ -27,12 +28,21 @@ fn visualize<C: BezierCurve<f64>>(out_base_path: &str, st: &SpaceTrace<f64, C>) 
     // Configure the chart
     println!("Configuring the chart");
     let filename = format!("{}/3d.gif", out_base_path);
-    let area = BitMapBackend::gif(&filename, (800, 600), 100)
+    let area = BitMapBackend::gif(&filename, (600, 400), 100)
         .unwrap()
         .into_drawing_area();
 
+    // Pre-render the curve
+    println!("Pre-rendering curve");
+    let rendered_curve = (0..=100).map(|k| {
+        let v = st.evaluate(k as f64 / 100.0).pose;
+        (v.x, v.y, v.z)
+    });
+
     // Animation loop
-    for pitch in 0..3 {
+    let pb = ProgressBar::new(45);
+    println!("Starting animation loop");
+    for iteration in pb.wrap_iter(0..45) {
         area.fill(&WHITE).unwrap();
         let mut chart = ChartBuilder::on(&area)
             .caption(format!("3D Path Visualization"), ("sans", 20))
@@ -51,23 +61,16 @@ fn visualize<C: BezierCurve<f64>>(out_base_path: &str, st: &SpaceTrace<f64, C>) 
                 },
             )
             .unwrap();
-            chart.with_projection(|mut p| {
-                p.yaw = 1.57 - (1.57 - pitch as f64 / 50.0).abs();
-                p.scale = 0.7;
-                p.into_matrix() // build the projection matrix
-            });
+        chart.with_projection(|mut p| {
+            p.yaw = ((iteration * 2) as f64).to_radians();
+            p.scale = 0.7;
+            p.into_matrix() // build the projection matrix
+        });
         chart.configure_axes().draw().unwrap();
 
         // Draw the path
-        println!("Drawing");
         chart
-            .draw_series(LineSeries::new(
-                (0..=100).map(|k| {
-                    let v = st.evaluate(k as f64 / 100.0).pose;
-                    (v.x, v.y, v.z)
-                }),
-                &RED,
-            ))
+            .draw_series(LineSeries::new(rendered_curve.clone(), &RED))
             .unwrap();
 
         area.present().unwrap();
@@ -75,12 +78,6 @@ fn visualize<C: BezierCurve<f64>>(out_base_path: &str, st: &SpaceTrace<f64, C>) 
 
     // Render
     println!("Rendering");
-    // chart
-    //     .configure_series_labels()
-    //     .border_style(&BLACK)
-    //     .background_style(&WHITE)
-    //     .draw()
-    //     .unwrap();
     area.present().expect("Unable to write result to file, please make sure 'plotters-doc-data' dir exists under current dir");
     println!("Result has been saved to {}", filename);
 }

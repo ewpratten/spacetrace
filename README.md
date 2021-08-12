@@ -25,3 +25,6 @@ This repository contains the following tools:
 - [`spacetrace-visualizer`](./visualizer) [![Crates.io](https://img.shields.io/crates/v/spacetrace)](https://crates.io/crates/spacetrace-visualizer)
   - Path visualization tool
 
+## Examples
+
+![Demo Animation](./demo.gif)
