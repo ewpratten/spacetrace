@@ -1,0 +1,22 @@
+[package]
+name = "spacetrace-visualizer"
+version = "0.1.0"
+authors = ["Evan Pratten <ewpratten@gmail.com>"]
+edition = "2018"
+description = "Visualization tool for SpaceTrace"
+readme = "README.md"
+homepage = "https://github.com/ewpratten/spacetrace/visualizer"
+repository = "https://github.com/ewpratten/spacetrace"
+license = "GPL-3.0"
+keywords = ["spacetrace"]
+categories = []
+
+# See more keys and their definitions at https://doc.rust-lang.org/cargo/reference/manifest.html
+[dependencies]
+vek = { version = "0.15", default-features = false, features = [
+    "libm",
+    "serde"
+] }
+serde = { version = "1.0", features = ["derive"] }
+serde_json = "1.0.64"
+spacetrace = { version = "0.1", path = "../spacetrace" }

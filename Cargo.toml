@@ -1,27 +1,5 @@
-[package]
-name = "spacetrace"
-version = "0.1.0"
-authors = ["Evan Pratten <ewpratten@gmail.com>"]
-edition = "2018"
-description = "A 3D path solving library"
-documentation = "https://docs.rs/spacetrace"
-readme = "README.md"
-homepage = "https://github.com/ewpratten/spacetrace"
-repository = "https://github.com/ewpratten/spacetrace"
-license = "GPL-3.0"
-keywords = ["algebra", "robotics", "bezier"]
-categories = ["no-std"]
-
-# See more keys and their definitions at https://doc.rust-lang.org/cargo/reference/manifest.html
-[dependencies]
-vek = { version = "0.15", default-features = false, features = [
-    "libm",
-    "serde"
-] }
-cfg-if = "1.0"
-num-traits = { version = "0.2", default-features = false }
-serde = { version = "1.0", features = ["derive"] }
-
-[features]
-default = []
-simd = ["vek/repr_simd"]
+[workspace]
+members = [
+    "./spacetrace",
+    "./visualizer"
+]
