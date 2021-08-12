@@ -20,3 +20,9 @@ impl<T: Real> BezierCurve<T> for QuadraticBezier3<T> {
         self.evaluate(k)
     }
 }
+
+impl<T: Real> BezierCurve<T> for &dyn BezierCurve<T> {
+    fn eval(&self, k: T) -> Vec3<T> {
+        (*self).eval(k)
+    }
+}

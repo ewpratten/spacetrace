@@ -20,3 +20,6 @@ vek = { version = "0.15", default-features = false, features = [
 serde = { version = "1.0", features = ["derive"] }
 serde_json = "1.0.64"
 spacetrace = { version = "0.1", path = "../spacetrace" }
+plotters = "^0.3.1"
+clap = "2.33"
+autojson = "0.1"

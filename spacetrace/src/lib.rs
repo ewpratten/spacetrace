@@ -12,4 +12,4 @@ pub mod trace;
 pub use crate::trace::SpaceTrace;
 pub mod poserot;
 pub use crate::poserot::PoseRot;
-pub(crate) mod bezier_util;
+pub mod bezier_util;
