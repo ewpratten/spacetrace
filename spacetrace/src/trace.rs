@@ -1,7 +1,7 @@
 //! Main definitions for the SpaceTrace
 
 use num_traits::{real::Real, Float};
-use vek::{Clamp, CubicBezier3, Lerp, QuadraticBezier3, Quaternion, Vec3};
+use vek::{Aabb, Clamp, CubicBezier3, Lerp, QuadraticBezier3, Quaternion, Vec3};
 
 use crate::{bezier_util::*, PoseRot};
 
@@ -65,6 +65,14 @@ impl<T: Real + Default + Lerp<T, Output = T> + Clamp + Float, C: BezierCurve<T>>
 
         // Build poserot
         PoseRot::new(pose, quat)
+    }
+}
+
+impl<T: Real + Default, C: BezierCurve<T>> SpaceTrace<T, C> {
+
+    /// Get the bounding box of the `SpaceTrace`.
+    pub fn get_bounding_box(&self) -> Aabb<T> {
+        self.curve.bounding_box()
     }
 }
 
