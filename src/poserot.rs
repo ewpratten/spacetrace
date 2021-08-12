@@ -1,6 +1,6 @@
 //! Utilities for expressing pairs of Vectors and Quaternions.
 
-use std::ops::Add;
+use std::ops::{Add, Sub};
 
 use core::fmt::Debug;
 use num_traits::{Float, One, Zero};
@@ -43,6 +43,17 @@ impl<T: Zero + One + Clone + PartialEq + Float> Add for PoseRot<T> {
         Self {
             pose: self.pose + rhs.pose,
             rotation: (self.rotation + rhs.rotation).normalized(),
+        }
+    }
+}
+
+impl<T: Zero + One + Clone + PartialEq + Float> Sub for PoseRot<T> {
+    type Output = Self;
+
+    fn sub(self, rhs: Self) -> Self::Output {
+        Self {
+            pose: self.pose + rhs.pose,
+            rotation: (self.rotation - rhs.rotation).normalized(),
         }
     }
 }
