@@ -1,6 +1,6 @@
 //! Main definitions for the SpaceTrace
 
-use num_traits::real::Real;
+use num_traits::{Float, real::Real};
 use vek::{Clamp, CubicBezier3, Lerp, QuadraticBezier3, Quaternion, Vec3};
 
 use crate::{bezier_util::*, PoseRot};
@@ -51,7 +51,7 @@ impl<T: Real + Default> SpaceTrace<T, QuadraticBezier3<T>> {
     }
 }
 
-impl<T: Real + Default + Lerp<T, Output = T> + Clamp, C: BezierCurve<T>> SpaceTrace<T, C> {
+impl<T: Real + Default + Lerp<T, Output = T> + Clamp + Float, C: BezierCurve<T>> SpaceTrace<T, C> {
 
     /// Evaluate the `SpaceTrace` at a given progress (from `0` to `1`).
     ///
